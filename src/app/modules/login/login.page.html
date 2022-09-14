@@ -1,0 +1,48 @@
+<ion-content class="bg-image">
+  <ion-img
+    src="../../../assets/icon/logo_login.svg"
+    alt="Banco BHD Leon"
+    class="logo"
+  >
+  </ion-img>
+
+  <form [formGroup]="form" (ngSubmit)="submitForm()">
+    <ion-item class="item">
+      <ion-icon name="person-outline" slot="start"></ion-icon>
+      <ion-input
+        type="phone"
+        placeholder="Documento de identidad"
+        required
+        formControlName="documentNumber"
+        [maxlength]="11"
+      ></ion-input>
+    </ion-item>
+
+    <ion-item class="item">
+      <ion-icon name="key-outline" slot="start"></ion-icon>
+      <ion-input
+        type="password"
+        placeholder="Contraseña"
+        required
+        formControlName="password"
+        [pattern]="regNumber"
+      ></ion-input>
+    </ion-item>
+
+    <ion-item class="item-toggle" lines="none">
+      <ion-toggle color="primary" formControlName="remenberUser"></ion-toggle>
+      <ion-label>RECUERDA MI USUARIO</ion-label>
+    </ion-item>
+
+    <ion-button
+      type="submit"
+      color="primary"
+      expand="block"
+      [disabled]="!form.valid"
+    >
+      INICIAR SESIÓN
+    </ion-button>
+
+    <a> AYUDA PARA INCIAR SESIÓN</a>
+  </form>
+</ion-content>
