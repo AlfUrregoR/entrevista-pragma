@@ -1,8 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { environment } from '@environments/environment';
+import { AuthenticacionDataInterface } from '@shared/interfaces/authentication-interface';
 import { Observable } from 'rxjs';
-import { AuthenticacionDataInterface } from 'src/app/shared/interfaces/authentication-interface';
-import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root',
