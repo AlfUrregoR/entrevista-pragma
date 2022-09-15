@@ -4,6 +4,7 @@ import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { Store } from '@ngrx/store';
 import { Observable, mergeMap, map, catchError, of } from 'rxjs';
 import {
+  authenticationLogout,
   authenticationUser,
   authenticationUserError,
   authenticationUserSuccess,

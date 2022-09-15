@@ -12,6 +12,7 @@ import { appReducers } from '@core/store/app.reducers';
 import { effectsArray } from '@core/store/effects';
 import { EffectsModule } from '@ngrx/effects';
 import { IonicStorageModule } from '@ionic/storage-angular';
+import { UserIdleModule } from 'angular-user-idle';
 
 @NgModule({
   declarations: [AppComponent],
@@ -22,8 +23,8 @@ import { IonicStorageModule } from '@ionic/storage-angular';
     HttpClientModule,
     StoreModule.forRoot(appReducers),
     EffectsModule.forRoot(effectsArray),
-    IonicStorageModule.forRoot()
-
+    IonicStorageModule.forRoot(),
+    UserIdleModule.forRoot({ idle: 5, timeout: 1 }),
   ],
   providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }],
   bootstrap: [AppComponent],

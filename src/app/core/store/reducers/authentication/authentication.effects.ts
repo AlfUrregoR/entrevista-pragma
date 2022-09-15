@@ -30,6 +30,14 @@ const authReducer = createReducer(
     (state): UserInfoInterface => ({
       ...state,
     })
+  ),
+  on(
+    actions.authenticationLogout,
+    (): UserInfoInterface => ({
+      msg: '',
+      token: null,
+      userInfo: {},
+    })
   )
 );
 

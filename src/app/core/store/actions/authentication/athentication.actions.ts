@@ -15,3 +15,7 @@ export const authenticationUserError = createAction(
   '[AUTHENTICATION] LOGIN USER ERROR',
   props<{ payload: UserInfoInterface }>()
 );
+
+export const authenticationLogout = createAction(
+  '[AUTHENTICATION] LOGOUT USER',
+);
