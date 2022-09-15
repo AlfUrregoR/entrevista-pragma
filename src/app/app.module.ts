@@ -11,6 +11,7 @@ import { StoreModule } from '@ngrx/store';
 import { appReducers } from '@core/store/app.reducers';
 import { effectsArray } from '@core/store/effects';
 import { EffectsModule } from '@ngrx/effects';
+import { IonicStorageModule } from '@ionic/storage-angular';
 
 @NgModule({
   declarations: [AppComponent],
@@ -21,6 +22,8 @@ import { EffectsModule } from '@ngrx/effects';
     HttpClientModule,
     StoreModule.forRoot(appReducers),
     EffectsModule.forRoot(effectsArray),
+    IonicStorageModule.forRoot()
+
   ],
   providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }],
   bootstrap: [AppComponent],

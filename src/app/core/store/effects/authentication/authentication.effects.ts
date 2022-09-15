@@ -8,6 +8,8 @@ import {
   authenticationUserError,
   authenticationUserSuccess,
 } from '@core/store/actions/authentication/athentication.actions';
+import { UserInfoInterface } from '@shared/interfaces/user-interface';
+import { StorageService } from '@core/services/store/store.service';
 
 @Injectable()
 export class AuthenticationEffects {
@@ -17,7 +19,10 @@ export class AuthenticationEffects {
       ofType(authenticationUser),
       mergeMap(({ documentNumber, password }) =>
         this.service.postLogin({ documentNumber, password }).pipe(
-          map((payload) => authenticationUserSuccess({ payload })),
+          map((payload: UserInfoInterface) => {
+            this.storageService.set('token', payload.token);
+            return authenticationUserSuccess({ payload });
+          }),
           catchError((err) => of(authenticationUserError({ payload: err })))
         )
       )
@@ -27,6 +32,7 @@ export class AuthenticationEffects {
   constructor(
     private actions$: Actions,
     private store: Store,
-    private service: AuthenticationService
+    private service: AuthenticationService,
+    private storageService: StorageService
   ) {}
 }
