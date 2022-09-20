@@ -1,10 +1,9 @@
-import { Injectable, OnDestroy } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { AuthenticationService } from '@core/authentication/authentication.service';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { Store } from '@ngrx/store';
 import { Observable, mergeMap, map, catchError, of } from 'rxjs';
 import {
-  authenticationLogout,
   authenticationUser,
   authenticationUserError,
   authenticationUserSuccess,
@@ -24,7 +23,9 @@ export class AuthenticationEffects {
             this.storageService.set('token', payload.token);
             return authenticationUserSuccess({ payload });
           }),
-          catchError((err) => of(authenticationUserError({ payload: err })))
+          catchError((err) =>
+            of(authenticationUserError({ payload: err.error }))
+          )
         )
       )
     );

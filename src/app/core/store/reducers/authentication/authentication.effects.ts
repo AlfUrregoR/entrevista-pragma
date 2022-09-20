@@ -27,8 +27,11 @@ const authReducer = createReducer(
   ),
   on(
     actions.authenticationUserError,
-    (state): UserInfoInterface => ({
+    (state, { payload }): UserInfoInterface => ({
       ...state,
+      msg: payload.msg,
+      token: payload.token,
+      userInfo: payload.userInfo,
     })
   ),
   on(

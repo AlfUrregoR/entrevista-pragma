@@ -1,6 +1,5 @@
-import { ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { AuthenticationService } from '@core/authentication/authentication.service';
 import { authenticationUser } from '@core/store/actions/authentication/athentication.actions';
 import { selectAuthentication } from '@core/store/selector/authentication.selector';
 import { Store } from '@ngrx/store';
@@ -9,6 +8,7 @@ import { UserInfoInterface } from '@shared/interfaces/user-interface';
 import { Observable, Subscription } from 'rxjs';
 import { NavController } from '@ionic/angular';
 import { StorageService } from '@core/services/store/store.service';
+import { ToastService } from '@core/services/toast/toast.service';
 
 @Component({
   selector: 'app-login',
@@ -24,11 +24,10 @@ export class LoginPage implements OnInit, OnDestroy {
 
   constructor(
     public fb: FormBuilder,
-    private changeDetectorRef: ChangeDetectorRef,
-    private authenticationService: AuthenticationService,
     private store: Store,
     private nav: NavController,
-    private storageService: StorageService
+    private storageService: StorageService,
+    private toastService: ToastService
   ) {
     this.form = fb.group({
       documentNumber: [null, [Validators.required, Validators.maxLength(11)]],
@@ -43,9 +42,16 @@ export class LoginPage implements OnInit, OnDestroy {
     this.store$ = this.store.select(selectAuthentication);
 
     this.storeSubscription = this.store$.subscribe((res: any) => {
-      const token = res.authenticationReducer.token;
+      const { token, msg } = res.authenticationReducer;
 
-      this.goToHome(token);
+      if (token) {
+        this.goToHome(token);
+        return;
+      }
+
+      if (msg === 'Incorrect user or password') {
+        this.showError('Documento de identidad y/o contraseña incorrecta');
+      }
     });
   }
 
@@ -53,6 +59,10 @@ export class LoginPage implements OnInit, OnDestroy {
     const token = await this.storageService.get('token');
 
     this.goToHome(token);
+  }
+
+  async showError(message: string) {
+    this.toastService.show({ message, color: 'danger', duration: 3000 });
   }
 
   goToHome(token: string) {
