@@ -76,6 +76,8 @@ export class LoginPage implements OnInit, OnDestroy {
   }
 
   submitForm() {
+    this.toastService.hidden();
+
     if (this.form.valid) {
       const payload: AuthenticacionDataInterface = {
         documentNumber: this.form.value.documentNumber,

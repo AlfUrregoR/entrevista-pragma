@@ -5,13 +5,21 @@ import { ToastController, ToastOptions } from '@ionic/angular';
   providedIn: 'root',
 })
 export class ToastService {
+  private toast: HTMLIonToastElement;
+
   constructor(private toastController: ToastController) {}
 
   public async show(options: ToastOptions) {
-    const toast = await this.toastController.create({
+    this.toast = await this.toastController.create({
       ...options,
     });
 
-    await toast.present();
+    await this.toast.present();
+  }
+
+  public hidden() {
+    if (this.toast) {
+      this.toast.dismiss();
+    }
   }
 }
