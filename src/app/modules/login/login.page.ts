@@ -57,7 +57,7 @@ export class LoginPage implements OnInit, OnDestroy {
 
   goToHome(token: string) {
     if (token) {
-      this.nav.navigateRoot(['/home']);
+      this.nav.navigateRoot(['/home/my-products']);
     }
   }
 

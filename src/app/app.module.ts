@@ -24,7 +24,7 @@ import { UserIdleModule } from 'angular-user-idle';
     StoreModule.forRoot(appReducers),
     EffectsModule.forRoot(effectsArray),
     IonicStorageModule.forRoot(),
-    UserIdleModule.forRoot({ idle: 5, timeout: 1 }),
+    UserIdleModule.forRoot({ idle: 180, timeout: 1 }),
   ],
   providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }],
   bootstrap: [AppComponent],
