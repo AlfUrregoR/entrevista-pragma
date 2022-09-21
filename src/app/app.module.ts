@@ -6,13 +6,14 @@ import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
 
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { StoreModule } from '@ngrx/store';
 import { appReducers } from '@core/store/app.reducers';
 import { effectsArray } from '@core/store/effects';
 import { EffectsModule } from '@ngrx/effects';
 import { IonicStorageModule } from '@ionic/storage-angular';
 import { UserIdleModule } from 'angular-user-idle';
+import { AuthInterceptor } from '@core/interceptors/auth.interceptor';
 
 @NgModule({
   declarations: [AppComponent],
@@ -26,7 +27,10 @@ import { UserIdleModule } from 'angular-user-idle';
     IonicStorageModule.forRoot(),
     UserIdleModule.forRoot({ idle: 180, timeout: 1 }),
   ],
-  providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }],
+  providers: [
+    { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
+    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

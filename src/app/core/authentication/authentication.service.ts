@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpBackend, HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from '@environments/environment';
 import { AuthenticacionDataInterface } from '@shared/interfaces/authentication-interface';
@@ -13,16 +13,19 @@ import { NavController } from '@ionic/angular';
 })
 export class AuthenticationService {
   private readonly uriLogin = '/api/login/';
+  private httpNoIntercept: HttpClient;
 
   constructor(
-    private http: HttpClient,
     private store: Store,
     private storageService: StorageService,
-    private nav: NavController
-  ) {}
+    private nav: NavController,
+    private handler: HttpBackend
+  ) {
+    this.httpNoIntercept = new HttpClient(handler);
+  }
 
   postLogin(payload: AuthenticacionDataInterface) {
-    return this.http.post(
+    return this.httpNoIntercept.post(
       `${environment.backendUrl}${this.uriLogin}`,
       payload
     ) as Observable<any>;
